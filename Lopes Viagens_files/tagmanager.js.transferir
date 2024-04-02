@@ -1,0 +1,118 @@
+var toolfactory = toolfactory || {};
+toolfactory.common = toolfactory.common || {};
+toolfactory.common.helpers = toolfactory.common.helpers || {};
+
+//Declare a class, with parameteres
+toolfactory.common.helpers.tagmanagerEvents = {
+    budgetInteration: "budgetInteraction",
+    click2callInteraction: "c2cInteraction",
+    clickInteraction: "clickInteraction"
+};
+toolfactory.common.helpers.tagmanagerStatus = {
+    openForm: "openForm",
+    send: "send"
+};
+toolfactory.common.helpers.tagmanager =
+(function () {
+    var events = toolfactory.common.helpers.tagmanagerEvents;
+    var status = toolfactory.common.helpers.tagmanagerStatus;
+
+    return {
+        pushObject: function (object) {
+            window.dataLayer.push(object);
+        },
+        pushEvent: function (str1, str2, str3, str4, num1, obj1) {
+
+            var str1 = str1 || undefined;
+            var str2 = str2 || undefined;
+            var str3 = str3 || undefined;
+            var str4 = str4 || undefined;
+            var num1 = num1 || undefined;
+            var obj1 = obj1 || undefined;
+
+            var var1 = str1;
+            if ((str1 != 'formValidation') && (str1 != 'waitingProcess') && (str1 != 'fluxeInterruption') && (str1 != 'customEvent') && (str1 != 'budgetInteraction') && (str1 != 'c2cInteraction') && (str1 != 'clickInteraction')) {
+                var1 = 'customEvent';
+            }
+
+            var eventObject = { 'event': var1 };
+            if (str2 !== undefined) {
+                eventObject.str2 = str2;
+            }
+            else{
+                eventObject.str2 = undefined;
+            }
+
+            if (str3 !== undefined) {
+                eventObject.str3 = str3;
+            }
+            else{
+                eventObject.str3 = undefined;
+            }
+
+            if (str4 !== undefined) {
+                eventObject.str4 = str4;
+            }
+            else{
+                eventObject.str4 = undefined;
+            }
+
+            if (num1 !== undefined) {
+                if (!isNaN(parseFloat(num1)) && isFinite(num1)) {
+                    eventObject.num1 = num1;
+                }
+                else{
+                    eventObject.num1 = undefined;
+                }
+            }
+            else{
+                eventObject.num1 = undefined;
+            }
+
+            if (obj1 !== undefined) {
+                eventObject.obj1 = obj1;
+            }
+            else{
+                eventObject.obj1 = undefined;
+            }
+
+            if (eventObject !== undefined) {
+                this.pushObject(eventObject);
+            }
+        },
+        pushEventOld: function (event, status) {
+            if (status !== undefined) {
+                toolfactory.common.helpers.tagmanager.pushObject({
+                    'event': event,
+                    'status': status
+                });
+            }
+            else {
+                toolfactory.common.helpers.tagmanager.pushObject({
+                    'event': event
+                });
+            }
+        },
+        openFormEvent: function () {
+            toolfactory.common.helpers.tagmanager.pushEventOld(events.budgetInteration, status.openForm);
+        },
+        sendBudgetEvent: function () {
+            toolfactory.common.helpers.tagmanager.pushEventOld(events.budgetInteration, status.send);
+        },
+        openClick2Call: function () {
+            toolfactory.common.helpers.tagmanager.pushEventOld(events.click2callInteraction, status.openForm);
+        },
+        sendClick2Call: function () {
+            toolfactory.common.helpers.tagmanager.pushEventOld(events.click2callInteraction, status.send);
+        },
+        clickEv: function () {
+            var $doc = $(document);
+            $doc.on('click', function () {
+                var dl = window.toolfactoryDataLayer;
+                dl.Page.EventType = 'click';
+                toolfactory.common.helpers.tagmanager.pushObject(dl);
+                toolfactory.common.helpers.tagmanager.pushEventOld(events.clickInteraction);
+            });
+        }
+    };
+})();

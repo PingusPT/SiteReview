@@ -1,0 +1,2 @@
+(window.__LOADABLE_LOADED_CHUNKS__=window.__LOADABLE_LOADED_CHUNKS__||[]).push([[23],{"+8x/":function(t,e,n){"use strict";n.r(e),n.d(e,"default",(function(){return o}));var a=n("hGi/"),r=n("wx14"),_=n("AeFk"),i=n("q1tI"),c=n.n(i),u=n("xNrx"),l=n.n(u);n("FHyN"),c.a.createElement;function o(t){var e=Object(r.a)({},(Object(a.a)(t),t));return Object(_.b)("div",{className:"features-list-traveltool"},Object(_.b)("div",{dangerouslySetInnerHTML:{__html:l.a.sanitize(e.html)}}))}},FHyN:function(t,e,n){}}]);
+//# sourceMappingURL=23.85948865.chunk.js.map
